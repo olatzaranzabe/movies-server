@@ -31,8 +31,7 @@ const server = http.createServer((request, response) => {
             break;
 
         case `/html?${query}`:
-            const { name } = querystring.parse(query);
-            console.log(name);
+            const name = query;
             response.statusCode = 200;
             response.write("<div>");
             response.write(`<h1>HOLA ${name}</h1`);
@@ -45,11 +44,34 @@ const server = http.createServer((request, response) => {
             response.statusCode = 200;
             response.setHeader("Content-Type", "text/html");
             response.end(html);
-        case "/getmoviebyid":
-            const methods = fs.readFileSync("./methods.js");
-            response.statusCode = 200;
-            response.setHeader("Content-Type", "text/javascript");
-            response.end();
+            break;
+        case `/getmoviebyid?${query}`:
+            console.log("rrr", query);
+            console.log("yyy", query.replace(/\D/g, ""));
+            const id = query.replace(/\D/g, "");
+            //const { id } = query.replace(/\D/g, "");
+
+            console.log("putoid", id);
+            //const methods = fs.readFileSync("./methods.js");
+            const getMovieById = id => {
+                console.log("holita");
+                getMovieFromMoviesDataById(id, (error, data) => {
+                    if (error) {
+                        response.statusCode = 404;
+                        response.setHeader("Content-type", "text/plain");
+                        response.end(
+                            `No se ha encontrado ninguna película con la id ${id}`
+                        );
+                    }
+                    getMovieById(id);
+                    response.statusCode = 200;
+                    response.setHeader("Content-type", "text/plain");
+                    response.end("hola");
+                    // response.end(JSON.stringify(data));
+                });
+                response.end("hola");
+            };
+            break;
 
         default:
             response.statusCode = 404;
