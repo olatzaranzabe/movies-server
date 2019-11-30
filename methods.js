@@ -79,4 +79,8 @@ const getMovieByShowtimes = async shotimes => {
 
 getMovieByShowtimes("13:00");
 
-module.exports = { getMovieById, getMoviesByTitle, getMovieByShowtimes };
+module.exports = {
+    getMovieFromMoviesDataById,
+    getMoviesByTitle,
+    getMovieByShowtimes
+};

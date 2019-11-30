@@ -3,7 +3,7 @@ const fs = require("fs");
 const url = require("url");
 const querystring = require("querystring");
 const {
-    getMovieById,
+    getMovieFromMoviesDataById,
     getMoviesByTitle,
     getMovieByShowtimes
 } = require("./methods.js");
@@ -46,9 +46,9 @@ const server = http.createServer((request, response) => {
             response.end(html);
             break;
         case `/getmoviebyid?${query}`:
-            const id = query.replace(/\D/g, "");
-            //const { id } = query.replace(/\D/g, "");
-            //const methods = fs.readFileSync("./methods.js");
+            const id = parseInt(query.replace(/\D/g, ""));
+            console.log("parseado", id);
+
             const getMovieById = id => {
                 getMovieFromMoviesDataById(id, (error, data) => {
                     if (error) {
@@ -58,14 +58,13 @@ const server = http.createServer((request, response) => {
                             `No se ha encontrado ninguna película con la id ${id}`
                         );
                     }
-                    getMovieById(id);
+
                     response.statusCode = 200;
                     response.setHeader("Content-type", "text/plain");
-                    response.end("hi ");
-                    // response.end(JSON.stringify(data));
+                    response.end(JSON.stringify(data));
                 });
-                response.end("hola");
             };
+            getMovieById(id);
             break;
 
         default:
