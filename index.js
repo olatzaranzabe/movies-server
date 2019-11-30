@@ -46,15 +46,10 @@ const server = http.createServer((request, response) => {
             response.end(html);
             break;
         case `/getmoviebyid?${query}`:
-            console.log("rrr", query);
-            console.log("yyy", query.replace(/\D/g, ""));
             const id = query.replace(/\D/g, "");
             //const { id } = query.replace(/\D/g, "");
-
-            console.log("putoid", id);
             //const methods = fs.readFileSync("./methods.js");
             const getMovieById = id => {
-                console.log("holita");
                 getMovieFromMoviesDataById(id, (error, data) => {
                     if (error) {
                         response.statusCode = 404;
@@ -66,7 +61,7 @@ const server = http.createServer((request, response) => {
                     getMovieById(id);
                     response.statusCode = 200;
                     response.setHeader("Content-type", "text/plain");
-                    response.end("hola");
+                    response.end("hi ");
                     // response.end(JSON.stringify(data));
                 });
                 response.end("hola");
