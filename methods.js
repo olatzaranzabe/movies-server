@@ -26,9 +26,9 @@ const getMoviesFromMoviesDataByTitle = title => {
                 movie.title.startsWith(title)
             );
 
-            if (!moviesMatched) {
+            if (!moviesMatched.length) {
                 reject(
-                    `No se ha encontrado una película que comience por ${title}`
+                    `No se ha encontrado una pelicula que comience por ${title}`
                 );
             }
 

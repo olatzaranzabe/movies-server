@@ -55,7 +55,7 @@ const server = http.createServer((request, response) => {
                         response.statusCode = 404;
                         response.setHeader("Content-type", "text/plain");
                         response.end(
-                            `No se ha encontrado ninguna película con la id ${id}`
+                            `No se ha encontrado ninguna pelicula con la id ${id}`
                         );
                     }
 
@@ -71,8 +71,16 @@ const server = http.createServer((request, response) => {
             console.log("title", title);
             const getMoviesByTitle = title => {
                 getMoviesFromMoviesDataByTitle(title)
-                    .then(movie => console.log(movie))
-                    .catch(error => console.log(error));
+                    .then(title => {
+                        response.statusCode = 200;
+                        response.setHeader("Content-type", "text/plain");
+                        response.end(JSON.stringify(title));
+                    })
+                    .catch(error => {
+                        response.statusCode = 404;
+                        response.setHeader("Content-type", "text/plain");
+                        response.end(error);
+                    });
             };
             getMoviesByTitle(title);
 
