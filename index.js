@@ -70,28 +70,9 @@ const server = http.createServer((request, response) => {
             const title = query.split("=")[1];
             console.log("title", title);
             const getMoviesByTitle = title => {
-                const getMoviesFromMoviesDataByTitle = title => {
-                    return new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            const moviesMatched = movies.filter(movie =>
-                                movie.title.startsWith(title)
-                            );
-
-                            /*  if (!moviesMatched) {
-                                reject(
-                                    
-                                    response.statusCode = 404;
-                                    response.setHeader("Content-type", "text/plain");
-                                    response.end(
-                                        `No se ha encontrado una película que comience por ${title}`
-                                    );
-                                );
-                            }
-*/
-                            resolve(moviesMatched);
-                        }, 2000);
-                    });
-                };
+                getMoviesFromMoviesDataByTitle(title)
+                    .then(movie => console.log(movie))
+                    .catch(error => console.log(error));
             };
             getMoviesByTitle(title);
 
