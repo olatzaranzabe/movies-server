@@ -47,7 +47,6 @@ const server = http.createServer((request, response) => {
             break;
         case `/getmoviebyid?${query}`:
             const id = parseInt(query.replace(/\D/g, ""));
-            console.log("parseado", id);
 
             const getMovieById = id => {
                 getMovieFromMoviesDataById(id, (error, data) => {
@@ -68,7 +67,6 @@ const server = http.createServer((request, response) => {
             break;
         case `/getmoviebytitle?${query}`:
             const title = query.split("=")[1];
-            console.log("title", title);
             const getMoviesByTitle = title => {
                 getMoviesFromMoviesDataByTitle(title)
                     .then(title => {
@@ -84,6 +82,25 @@ const server = http.createServer((request, response) => {
             };
             getMoviesByTitle(title);
 
+            break;
+        case `/getmoviebyshowtime?${query}`:
+            const shotimes = query.split("=")[1];
+            const getMovieByShowtimes = async shotimes => {
+                try {
+                    const moviesMatched = await getMoviesFromMoviesDataByShowtimes(
+                        shotimes
+                    );
+
+                    return JSON.stringify(moviesMatched);
+                } catch (error) {
+                    response.statusCode = 404;
+                    response.setHeader("Content-type", "text/plain");
+                    response.end(
+                        `No se ha encontrado ninguna pelicula que comience a las ${shotimes}`
+                    );
+                }
+            };
+            getMovieByShowtimes(shotimes);
             break;
         default:
             response.statusCode = 404;
