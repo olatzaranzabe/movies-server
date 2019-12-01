@@ -91,7 +91,9 @@ const server = http.createServer((request, response) => {
                         shotimes
                     );
 
-                    return JSON.stringify(moviesMatched);
+                    response.statusCode = 200;
+                    response.setHeader("Content-type", "text/plain");
+                    response.end(JSON.stringify(moviesMatched));
                 } catch (error) {
                     response.statusCode = 404;
                     response.setHeader("Content-type", "text/plain");
