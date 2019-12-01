@@ -81,6 +81,6 @@ getMovieByShowtimes("13:00");
 
 module.exports = {
     getMovieFromMoviesDataById,
-    getMoviesByTitle,
-    getMovieByShowtimes
+    getMoviesFromMoviesDataByTitle,
+    getMoviesFromMoviesDataByShowtimes
 };

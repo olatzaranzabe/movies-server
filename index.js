@@ -4,7 +4,7 @@ const url = require("url");
 const querystring = require("querystring");
 const {
     getMovieFromMoviesDataById,
-    getMoviesByTitle,
+    getMoviesFromMoviesDataByTitle,
     getMovieByShowtimes
 } = require("./methods.js");
 const server = http.createServer((request, response) => {
@@ -66,7 +66,36 @@ const server = http.createServer((request, response) => {
             };
             getMovieById(id);
             break;
+        case `/getmoviebytitle?${query}`:
+            const title = query.split("=")[1];
+            console.log("title", title);
+            const getMoviesByTitle = title => {
+                const getMoviesFromMoviesDataByTitle = title => {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            const moviesMatched = movies.filter(movie =>
+                                movie.title.startsWith(title)
+                            );
 
+                            /*  if (!moviesMatched) {
+                                reject(
+                                    
+                                    response.statusCode = 404;
+                                    response.setHeader("Content-type", "text/plain");
+                                    response.end(
+                                        `No se ha encontrado una película que comience por ${title}`
+                                    );
+                                );
+                            }
+*/
+                            resolve(moviesMatched);
+                        }, 2000);
+                    });
+                };
+            };
+            getMoviesByTitle(title);
+
+            break;
         default:
             response.statusCode = 404;
             response.end("La ruta a la que se intenta acceder no existe");
