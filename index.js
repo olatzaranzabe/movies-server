@@ -5,7 +5,7 @@ const querystring = require("querystring");
 const {
     getMovieFromMoviesDataById,
     getMoviesFromMoviesDataByTitle,
-    getMovieByShowtimes
+    getMoviesFromMoviesDataByShowtimes
 } = require("./methods.js");
 const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url);
@@ -85,6 +85,7 @@ const server = http.createServer((request, response) => {
             break;
         case `/getmoviebyshowtime?${query}`:
             const shotimes = query.split("=")[1];
+            console.log(shotimes);
             const getMovieByShowtimes = async shotimes => {
                 try {
                     const moviesMatched = await getMoviesFromMoviesDataByShowtimes(

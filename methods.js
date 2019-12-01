@@ -54,7 +54,7 @@ const getMoviesFromMoviesDataByShowtimes = showTime => {
                 movie.showtimes.includes(showTime)
             );
 
-            if (!moviesMatched) {
+            if (!moviesMatched.length) {
                 reject(
                     `No se ha encontrado una película que comience por ${title}`
                 );
